@@ -1,0 +1,9 @@
+/*Header*/
+
+.home__header--logo {
+    width: 100px;
+    border-radius: 50%;
+    border: solid 1px gray;
+    margin: 15px auto 30px;
+}
+
