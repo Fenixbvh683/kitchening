@@ -160,3 +160,61 @@ li{
         
     }
 }
+
+@media (min-width:1180px) {
+
+    /*HEADER*/
+
+    .home__header--box-logo {
+        width: 180px;
+    }
+
+    .home__header__nav--menu ul li {
+        font-size: 1rem;
+        height: 30px;
+        padding: 15px;
+    }
+
+    /*MAIN*/
+
+    .home__main__section__article {
+        width: 32%;
+        
+    }
+
+    .home__main__section__article:nth-child(even){
+            margin-right: 2%;
+    }
+
+    .home__main__section__article:nth-child(3n){
+        margin-right: 0;
+      
+    }
+
+    .home__header__nav--menu {
+        margin-top: 0;
+        margin-bottom: 0;
+        
+        text-transform: uppercase;
+        line-height: 30px;
+    
+        text-align: right;
+        padding-top: 20px;
+        padding-left: 8px;
+        padding-right: 8px;
+        font-weight: 400;
+        padding-bottom: 30px;
+
+
+    }
+    
+    header a {
+        
+        
+    }
+    
+    .header--horizontal{
+        
+    }
+
+}
