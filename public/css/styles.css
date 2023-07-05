@@ -1,2 +1,3 @@
-@import "/css/general.css";
-@import "/css/home.css"
+@import "./normalize.css";
+@import "./general.css";
+@import "./home.css";
