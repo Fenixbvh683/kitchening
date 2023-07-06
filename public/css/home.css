@@ -8,7 +8,7 @@
 .home__header--logo {
     width: 100%;
     border-radius: 50%;
-    border: solid 1px var(--colorGris);
+    
     
 }
 
@@ -193,6 +193,35 @@ li{
 
 
     /*FOOTER*/
+
+    .home__footer__nav--menu{
+        background-color: var(--colorRojo);
+        text-align: center;
+        padding-top: 60px;
+        border-radius: 25px 25px 0 0;
+        padding-bottom: 60px;
+        font-size: 16px;
+        font-weight: 700;
+        
+    }
+
+    .home__footer__nav--menu ul li {
+        
+        display: inline-block;
+        background-color: transparent;
+        padding: 8px 8px;
+        border-right: 2px solid white;
+        padding-bottom: 1px;
+        padding-top: 1px;
+        
+        
+    }
+
+    .home__footer__nav--menu ul li:last-child {
+        margin-bottom: 0;
+        border-right: none;
+        
+ }
 
     
 
