@@ -1,0 +1,23 @@
+[
+    {
+        "id" : 1,
+        "name" : "Pastas",
+        "image" : "null"
+        
+    },
+
+    {
+        "id" : 2,
+        "name" : "Carnes",
+        "image" : "null"
+        
+    },
+
+    {
+        "id" : 3,
+        "name" : "Pescados y Mariscos",
+        "image" : "null"
+        
+    }
+
+]

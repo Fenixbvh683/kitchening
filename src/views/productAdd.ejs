@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<%- include('partials/head') %>
+   
+<body class="home">
+    
+    <%- include('partials/header') %>
+
+    <main class="container">
+
+            <div class="class-row">
+
+                <div class="col-12 col-md-10 mx-auto mt-5">
+
+                    <div class="card shadow">
+
+                        <div class="card-header">
+                            <h4 class="card-title">Agregar Producto</h4>
+                        </div>
+                        
+                        <div class="card-body">
+
+                            <form action="" method="POST" class="row">
+
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="title" class="form-label">Titulo</label>
+                                    <input type="text" class="form-control" id="title" placeholder="Nombre del producto" name="title">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label for="category" class="form-label">Categoria</label>
+                                    <select class="form-select" aria-label="Default select example" name="category" id="category">
+                                        <option value="" selected hidden>Seleccione....</option>
+                                        <% categories.forEach(category => { %>
+                                         <option value="<%= category.name %>"><%= category.name %></option>
+                                        <% }) %>>
+                                      </select>
+                                  </div>
+
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label for="price" class="form-label">Precio</label>
+                                    <input type="number" class="form-control" id="price" placeholder="Precio" name="price">
+                                  </div>
+
+                                  <div class="col-12 col-md-6 mb-3">
+                                    <label for="discount" class="form-label">Descuento</label>
+                                    <input type="number" class="form-control" id="discount" placeholder="Descuento" name="discount">
+                                  </div>
+
+                                  <div class="col-12 mb-3">
+                                    <label for="description" class="form-label">Descripcion</label>
+                                    <textarea name="description" id="description" class="form-control" style="resize: none"></textarea>
+                                  </div>
+
+                                  <div class="col-12 d-flex justify-content-end gap-2 mb-3">
+                                    <label for="image" class="btn btn-secondary">Agregar Imagen</label>
+                                    <input type="file" name="image" id="image" hidden>
+                                    <button type="submit" class="btn btn-outline-dark">Guardar Cambios</button>
+                                  </div>
+
+                            </form>
+
+                        </div>
+
+
+                          
+                    </div>
+
+                </div>
+                
+            </div>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <%- include('partials/script') %>
+    
+</body>
+</html>
