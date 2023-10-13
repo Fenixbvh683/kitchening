@@ -1,3 +1,12 @@
+const { readJSON } = require("../../data")
+
 module.exports = (req,res) => {
-    return res.render('productDetail')
+
+    const products = readJSON('products.json')
+
+    const product = products.find(product => product.id === req.params.id)
+
+    return res.render('productDetail', {
+        ...product
+    })
 }

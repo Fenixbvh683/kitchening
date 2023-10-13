@@ -27,6 +27,7 @@
     text-transform: uppercase;
     margin-bottom: 1px;
     padding: 8px 0;
+    text-align: center;
 }
 
 .home__header__nav--menu ul li:last-child{

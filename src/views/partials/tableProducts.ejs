@@ -1,0 +1,115 @@
+<div>
+                                        
+    <div class="table-responsive">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Orden</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Catgoria</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Descuento</th>
+            <th scope="col">P. Final</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(({id, title, category, price, discount,image,  description},index) => { %>
+                <tr>
+                    <th scope="row"><%= index + 1 %></th>
+                    <td><%= title %></td>
+                    <td><%= category || 'Sin Especificar' %></td>
+                    <td><%= price %></td>
+                    <td><%= discount %></td>
+                    <td><%= price - (price * discount / 100) %></td>
+                    <td>
+                        <div class="d-flex gap-1"><a class="" href="/products/detail/<%= id %>"></a>
+
+                            <!--Inicia Modal-->
+
+                                <!-- Button trigger modal -->
+<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#detailProduct<%= id %>">
+<i class="fa-solid fa-eye"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="detailProduct<%= id %>" tabindex="-1" aria-labelledby="detailProduct<%= id %>Label" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h1 class="modal-title fs-5" id="detailProduct<%= id %>Label"><%= title %></h1>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+
+<div class="card mb-3" style="max-width: 540px;">
+<div class="row g-0">
+<div class="col-md-6">
+<img src="/img/products/<%= image || 'fideo.jpg' %>" class="img-fluid rounded-start" alt="...">
+</div>
+<div class="col-md-6">
+<div class="card-body">
+<h5 class="card-title"><%= title %></h5>
+<p class="card-text"><%= description %></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+</div>
+</div>
+</div>
+</div>
+
+                            <!--Finaliza Modal-->
+
+                            <a class="btn btn-sm btn-success" href="/products/edit/<%= id %>"><i class="fa-solid fa-edit"></i></a>
+                            
+
+                                <!--Inicioi modal Pregunta eliminar Producto-->
+
+                                <!-- Button trigger modal -->
+<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#removeProduct<%= id %>">
+  <i class="fa-solid fa-trash"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="removeProduct<%= id %>" tabindex="-1" aria-labelledby="removeProduct<%= id %>Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="removeProduct<%= id %>Label">CUIDADO ....</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Estas seguro que queres eliminar el prodcuto <b><%= title %></b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form action="/products/remove/<%= id %>?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">Eliminalo</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+                                <!--Fin modal Pregunta eliminar Producto-->
+
+
+                        </div>
+                    </td>
+                  </tr>
+            <% }) %>
+          
+                                                      
+      </table>
+</div>
+</div>

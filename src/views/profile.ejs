@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+
+
+<body class="detalle">
+    <%- include('partials/header') %>
+
+    <main class="detalle__main">
+        <div class="row">
+            <div class="col-12 col-md-10 col-lg-8 mx-auto mt-5">
+                <div class="card mb-3 shadow-lg">
+                    <div class="card-header">
+                        Perfil de Usuario
+                        <div class="card-body">
+                            <form action="/users/update?_method=PUT" method="POST" class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="name" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Tu Nombre" name="name" value="<%= name %>">
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="surname" class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" id="surname" placeholder="Tu Apellido" name="surname" value="<%= surname %>">
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="address" class="form-label">Direccion</label>
+                                    <input type="text" class="form-control" id="address" placeholder="Calle y numero" name="email" value="<%= address %>">
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="birthday" class="form-label">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" id="birthday" name="birthday" value="<%= birthday %>">
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="province" class="form-label">Provincia</label>
+                                    <select type="text" class="form-select" id="province" name="province">
+                                        <option <%= province === "" && 'selcted' %> value="" hidden>Seleccione...</option>
+                                        <option <%= province === "BA" && 'selcted' %> value="BA">Buenos Aires</option>
+                                        <option <%= province === "NQM" && 'selcted' %> value="NQN">Neuquen</option>
+                                    </select>
+                                </div>
+
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <label for="city" class="form-label">Ciudad</label>
+                                        <select type="text" class="form-select" id="city" name="city">
+                                            <option <%= city === "" && 'selcted' %> value="" hidden>Seleccione...</option>
+                                            <option <%= city === "HU" && 'selcted' %> value="HU">Hurlingham</option>
+                                            <option <%= city === "MO" && 'selcted' %> value="MO">W. Morris</option>
+                                            <option <%= city === "TS" && 'selcted' %> value="TS">V. Tesey</option>
+                                        </select>
+                                    </div>
+                                                                                              
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-dark">Guardar Cambios</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('partials/footer') %>
+    <%- include('partials/script') %>
+
+</body>
+
+</html>

@@ -42,6 +42,10 @@ body {
     text-align: center;
 }
 
+.home__footer{
+    margin-top: 35px;
+}
+
 @media (min-width: 1180px) {
 
     body {

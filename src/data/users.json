@@ -1,0 +1,28 @@
+[
+   {
+      "id": "0b0d349b-f081-410c-9f24-b6b67a0ba051",
+      "name": "Jorge",
+      "surname": "Lesme",
+      "email": "manidelabk031@gmail.com",
+      "password": "$2a$10$kN7Tv1Pc00KfssMp1BVbh.6aAx7WLGWzebIF4V.Sa3y6rwB/LOEDS",
+      "role": "admin",
+      "birthday" : null,
+      "address" : null,
+      "province" : null,
+      "city" : null,
+      "createAt": "2023-10-10T13:38:59.010Z"
+   },
+   {
+      "id": "5d052185-06f9-4aab-a25d-b7884325e357",
+      "name": "Andres",
+      "surname": "Lesme",
+      "email": "mapita@gmail.com",
+      "password": "$2a$10$2.MCC3p2pSgRZRQCb.1fhe8IXmQBykq3.y4RSGLxhd0OnH.6rRnfW",
+      "role": "user",
+      "birthday" : null,
+      "address" : null,
+      "province" : null,
+      "city" : null,
+      "createAt": "2023-10-10T19:38:31.032Z"
+   }
+]
