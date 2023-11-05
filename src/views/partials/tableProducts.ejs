@@ -14,11 +14,11 @@
           </tr>
         </thead>
         <tbody>
-            <% products.forEach(({id, title, category, price, discount,image,  description},index) => { %>
+            <% products.forEach(({id, title, category, section, price, discount,images, description},index) => { %>
                 <tr>
                     <th scope="row"><%= index + 1 %></th>
                     <td><%= title %></td>
-                    <td><%= category || 'Sin Especificar' %></td>
+                    <td><%= category.name %></td>
                     <td><%= price %></td>
                     <td><%= discount %></td>
                     <td><%= price - (price * discount / 100) %></td>
@@ -44,13 +44,30 @@
 
 <div class="card mb-3" style="max-width: 540px;">
 <div class="row g-0">
+
 <div class="col-md-6">
-<img src="/img/products/<%= image || 'fideo.jpg' %>" class="img-fluid rounded-start" alt="...">
+<img src="/img/products/<%= images.find(image => image.main).file %>" class="img-fluid rounded-start" alt="...">
+<div class="d-flex flex-wrap justify-content-between mt-1">
+  <% images.filter(image => !image.main).forEach(image => { %>
+    <img src="/img/products/<%= image.file %>" class="img-fluid rounded-start" style="width: 33%" alt="...">
+  <% }) %>
+  </div>
 </div>
+
 <div class="col-md-6">
 <div class="card-body">
 <h5 class="card-title"><%= title %></h5>
 <p class="card-text"><%= description %></p>
+ 
+<div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>Categoria: </b><%= category.name %></li>
+    <li class="list-group-item"><b>Seccion: </b><%= section.name %></li>
+    <li class="list-group-item"><b>Precio: </b><%= price %></li>
+    <li class="list-group-item"><b>Descuento: </b><%= discount %></li>
+    <li class="list-group-item">By: MANIDELA</li>
+  </ul>
+</div>
 
 </div>
 </div>

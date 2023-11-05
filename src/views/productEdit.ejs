@@ -10,23 +10,26 @@
                 <div class="col-12 col-md-8 mx-auto mt-5">
                     <div class="card shadow">
                         <div class="card-header">
-                            <h4 class="card-title">Editar producto</h4>
+                            <h4 class="card-title">Editar producto: <%= title %></h4>
                         </div>
                         <div class="card-body">
                             <form action="/products/update/<%= id %>?_method=PUT" method="POST" class="row" enctype="multipart/form-data">
+                                
                                 <div class="col-12 col-md-6 mb-3">
                                     <label for="title" class="form-label">Título</label>
                                     <input type="text"  class="form-control <%= locals.errors && (errors.title && 'is-invalid') %>" id="title" placeholder="Título del producto" name="title" value="<%= title %>">
                                         <small class="text-danger ms-2"><%= locals.errors && (errors.title && errors.title.msg) %></small>
                                 </div>
+
                                 <div class="col-12 col-md-6 mb-3">
-                                    <label for="category" class="form-label">Categoría</label>
-                                    <select class="form-select" aria-label="Default select example" name="category" id="category">
-                                        <% categories.forEach(item=> { %>
-                                        <option <%=item.name===category && 'selected' %> value="<%= item.name %> "><%= item.name %></option>
+                                    <label for="categoryId" class="form-label">Categoría</label>
+                                    <select class="form-select" aria-label="Default select example" name="categoryId" id="categoryId">
+                                        <% categories.forEach(category => { %>
+                                        <option <%= category.id === categoryId && 'selected' %> value="<%= categoryId %> "><%= category.name %></option>
                                         <% }) %>
                                     </select>
                                 </div>
+
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="price" class="form-label">Precio</label>
                                     <input type="number" class="form-control <%= locals.errors && (errors.price && 'is-invalid') %>"
@@ -35,29 +38,24 @@
                                         <small class="text-danger ms-2">
                                             <%= locals.errors && (errors.price && errors.price.msg) %>
                                           </small>
-                      
                                 </div>
+
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="discount" class="form-label">Descuento</label>
                                     <input type="number" class="form-control"
                                         id="discount" name="discount"
                                         value="<%= discount %>">
                                 </div>
+
                                 <div class="col-12 col-md-4 mb-3">
-                                    <label for="section" class="form-label">Sección</label>
-                                    <select class="form-select"
-                                        aria-label="Default select example"
-                                        name="section"
-                                        id="section">
-                                        <% sections.forEach(item=> { %>
-                                        <option value="<%= item %>" <%=section===item
-                                            && 'selected' %>><%=
-                                            item==='free' ? 'Gratis' : item==='sale'
-                                            ? 'Oferta' : 'Nuevo' %>
-                                        </option>
+                                    <label for="sectionId" class="form-label">Sección</label>
+                                    <select class="form-select" aria-label="Default select example" name="sectionId" id="sectionId">
+                                        <% sections.forEach(section=> { %>
+                                        <option value="<%= sectionId %>" <%=sectionId === section.id && 'selected' %>><%= section.name %></option>
                                         <% }) %>
                                     </select>
                                 </div>
+
                                 <div class="col-12 mb-3">
                                     <label for="description" class="form-label">Descripción</label>
                                     <textarea name="description"
@@ -67,19 +65,27 @@
                                             <%= locals.errors && (errors.description && errors.description.msg) %>
                                           </small>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <img
-                                        src="/img/<%= image || 'img-pdto-1.jpg' %>"
-                                        alt>
+
+                                <div class="col-12 col-md-6 mb-3 ">
+                                    
+                                    <div class="d-flex justify-content-between gap-2">
+
+                                        <% images.forEach(image => { %>
+                                            <img src="/img/products/<%= image.file %>" width="50%" alt="">
+                                        <% }) %>
+
+                                    </div>
+
                                 </div>
+                                
                                 <div
                                     class="col-12 d-flex justify-content-end gap-2 mb-3">
-                                    <label for="image" class="btn btn-secondary">Imagen
+                                    <label for="image" class="btn btn-secondary">Cambiar Imagen
                                         principal</label>
                                     <input type="file" name="image" id="image"
                                         hidden />
                                     <label for="images"
-                                        class="btn btn-secondary">Imágenes</label>
+                                        class="btn btn-secondary">Cambiar Imágenes</label>
                                     <input type="file" multiple name="images"
                                         id="images" hidden />
                                     <button class="btn btn-dark">Guardar cambios</button>

@@ -10,9 +10,9 @@ module.exports = [
             min : 4,
             max : 50
                 }).withMessage('Caracteres entre 4 y 50'),
-    check('category')
+    check('categoryId')
         .notEmpty().withMessage('La categoria del producto es obligatorio'),
-    check('section')
+    check('sectionId')
         .notEmpty().withMessage('La seccion del producto es obligatorio'),
     check('price')
         .notEmpty().withMessage('El precio del producto es obligatorio')

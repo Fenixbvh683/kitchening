@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
-const {readJSON, writeJSON} = require("../../data");
-const User = require("../../data/User");
+const {hashSync} = require('bcryptjs')
+const db = require("../../database/models");
 
 
 module.exports = (req,res) => {
@@ -9,17 +9,33 @@ module.exports = (req,res) => {
 
     if(errors.isEmpty()) {
 
-        const users = readJSON('users.json');
-        const user = new User(req.body);
+        const {name, surname, email, password} = req.body
+
+        db.User.create({
+
+            name : name.trim(),
+            surname : surname.trim(),
+            email : email.trim(),
+            password : hashSync(password, 10),
+            roleId : 2,
+        })
+        .then(user => {
+            console.log(user);
+            db.Address.create({
+                userId : user.id
+            })
+            .then(() => {
+                return res.redirect('/')
+            })
+        })
+        .catch(error => (error))
     
-        users.push(user);
-        writeJSON(users, 'users.json')
-    
-        return res.redirect('/')
+        
 
     } else {
-        return res.send(errors.mapped())
+        return res.render('register',{
+            old : req.body,
+           errors : errors.mapped()})
     }
 
-   
 }

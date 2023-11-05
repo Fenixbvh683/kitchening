@@ -1,63 +1,107 @@
 const { unlinkSync, existsSync } = require("fs");
 const { validationResult } = require("express-validator");
-const { readJSON, writeJSON } = require("../../data")
+const db = require("../../database/models");
 
-module.exports = (req,res) => {
+module.exports = (req, res) => {
+  const errors = validationResult(req);
 
-    const errors = validationResult(req);
-    const products = readJSON("products.json");
+  if (errors.isEmpty()) {
+    const { title, price, categoryId, sectionId, discount, description } =
+      req.body;
 
-
-    if (errors.isEmpty()) {
-        const { title, price, category, discount, description, section} = req.body;
-    
-        const productsModify = products.map((product) => {
-          if (product.id === req.params.id) {
-            req.files.image &&
-              existsSync(`./public/img/products/${product.image}`) &&
-              unlinkSync(`./public/img/products/${product.image}`);
-    
-            req.files.images &&
-              product.images.forEach(image => {
-                existsSync(`./public/img/products/${image}`) &&
-                  unlinkSync(`./public/img/products/${image}`);
-              });
-        
-              product.title = title.trim();
-              product.description = description.trim();
-              product.price = +price;
-              product.discount = +discount;
-              product.category = category;
-              product.section = section;
-              (product.image = req.files.image ? req.files.image[0].filename : product.image),
-              (product.images = req.files.images ? req.files.images.map((image) => image.filename) : product.images);
+    db.Product.findByPk(req.params.id, {
+      include: ["images"],
+    }).then((product) => {
+      db.Product.update(
+        {
+          title: title.trim(),
+          price,
+          discount,
+          description: description.trim(),
+          categoryId,
+          sectionId,
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
         }
-        
-        return product;
-    })
+      )
+        .then(() => {
+          //cambiar imagen principal
+          if (req.files.image) {
+            existsSync(`./public/img/products/${product.images.find((image) => image.main).file}`) &&
+              unlinkSync(`./public/img/products/${product.images.find((image) => image.main).file}`);
+              
+            db.Image.destroy({
+              where: {
+                productId: req.params.id,
+                main: true,
+              },
+            }).then(() => {
+              db.Image.create({
+                file: req.files.image[0].filename,
+                main: true,
+                productId: req.params.id,
+              });
+            });
+          }
+          //cambiar imagenes secundarias
+          if (req.files.images) {
+            product.images.filter((image) => !image.main).forEach((image) => {
+                existsSync(`./public/img/product/${image.file}`) &&
+                  unlinkSync(`./public/img/product/${image.file}`);
+              });
 
-    writeJSON(productsModify, 'products.json')
+            db.Image.destroy({
+              where: {
+                productId: req.params.id,
+                main: false,
+              },
+            }).then(() => {
+              const images = req.files.images.map(({ filename }) => {
+                return {
+                  file: filename,
+                  main: false,
+                  productId: product.id,
+                };
+              });
 
-    
-    return res.redirect('/admin')
-}else {
-    const categories = readJSON('categories.json');
-    const sections = readJSON('sections.json');
-
-    (req.files.image && existsSync(`./public/img/products/${req.files.image[0].filename }`)) && unlinkSync(`./public/img/products/${req.files.image[0].filename }`);
-
-    if(req.files.images) {
-        req.files.images.forEach(file => {
-            existsSync(`./public/img/products/${file.filename}`) && unlinkSync(`./public/img/products/${file.filename}`)
+              db.Image.bulkCreate(images, {
+                validate: true,
+              }).then((result) => console.log(result));
+            });
+          }
         })
-    } 
+        .catch((error) => console.log(error))
+        .finally(() => {
+          return res.redirect("/admin");
+        });
+    });
+  } else {
+    const id = req.params.id;
 
-    const product = products.find(product => product.id === req.params.id)
-    return res.render('productEdit',{
-        errors: errors.mapped(),
-        categories,
-        sections,
-        ...product
-    })
+    const product = db.Product.findByPk(id, {
+      include: {
+        all: true,
+      },
+    });
+    const categories = db.Category.findAll({
+      order: ["name"],
+    });
+    const sections = db.Section.findAll({
+      order: ["name"],
+    });
+
+    Promise.all([product, categories, sections])
+      .then(([product, categories, sections]) => {
+        return res.render("productEdit", {
+          categories,
+          sections,
+          ...product.dataValues,
+          errors: errors.mapped(),
+        });
+      })
+      .catch((error) => console.log(error));
   }
 };

@@ -1,26 +1,58 @@
 const {unlinkSync, existsSync} = require('fs');
 const {validationResult} = require('express-validator');
-const Product = require('../../data/Product');
-const { readJSON, writeJSON } = require('../../data');
+const db = require('../../database/models');
+
 
 module.exports = (req,res) => {
 
     const errors = validationResult(req);
     if(errors.isEmpty()){
-        const products = readJSON('products.json');
-        const data = {
-            ...req.body,
-            image : req.files.image ? req.files.image[0].filename : null,
-            images : req.files.images ? req.files.images.map(image => image.filename) : []
-        }
-        const newProduct = new Product(data);
-        products.push(newProduct);
-        writeJSON(products, 'products.json')
-        return res.redirect('/admin')
-    }else {
-        const categories = readJSON('categories.json');
-        const sections = readJSON('sections.json');
+        
+        const {title,price, discount, description, categoryId, sectionId} = req.body;
+        db.Product.create({
+            title : title.trim(),
+            price,
+            discount : discount || 0,
+            sectionId,
+            categoryId,
+            description : description.trim()
+        })
+            .then(product => {
+                if(req.files.image){
+                    db.Image.create({
+                        file :  req.files.image[0].filename,
+                        main : true,
+                        productId : product.id
+                    })
+                        .then( () => {
+                            if(req.files.images){
+                               const images = req.files.images.map(({filename}) => {
+                                return {
+                                    file: filename,
+                                    main : false,
+                                    productId : product.id
+                                }
+                               })
 
+                               db.Image.bulkCreate(images,{
+                                validate : true
+                               }).then(result => {
+                                return res.redirect('/admin')
+                               })
+                               
+                            }else{
+                                return res.redirect('/admin')
+                            }
+                        } )
+                }else{
+                    return res.redirect('/admin')
+                }
+            })
+            .catch(error => console.log(error))
+       
+    }else {
+
+        // eliminando imágenes
         (req.files.image && existsSync(`./public/img/products/${req.files.image[0].filename }`)) && unlinkSync(`./public/img/products/${req.files.image[0].filename }`);
 
         if(req.files.images) {
@@ -29,11 +61,25 @@ module.exports = (req,res) => {
             })
         } 
 
-          return res.render('productAdd',{
-                categories,
-                sections : sections.sort(),
-                errors : errors.mapped(),
-                old : req.body
+        const categories = db.Category.findAll({
+            order : ['name']
+        });
+        const sections = db.Section.findAll({
+            order : ['name']
+        });
+    
+        Promise.all([categories,sections])
+            .then(([categories, sections]) => {
+                return res.render('productAdd',{
+                    categories,
+                    sections,
+                    errors : errors.mapped(),
+                    old : req.body
+                })
             })
+            .catch(error => console.log(error))
+
     }
+    
+
 }

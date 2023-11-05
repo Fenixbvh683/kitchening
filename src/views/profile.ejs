@@ -26,7 +26,7 @@
 
                                 <div class="col-12 col-md-6 mb-3">
                                     <label for="address" class="form-label">Direccion</label>
-                                    <input type="text" class="form-control" id="address" placeholder="Calle y numero" name="email" value="<%= address %>">
+                                    <input type="text" class="form-control" id="address" placeholder="Calle y numero" name="email" value="">
                                 </div>
 
                                 <div class="col-12 col-md-6 mb-3">
@@ -37,19 +37,16 @@
                                 <div class="col-12 col-md-6 mb-3">
                                     <label for="province" class="form-label">Provincia</label>
                                     <select type="text" class="form-select" id="province" name="province">
-                                        <option <%= province === "" && 'selcted' %> value="" hidden>Seleccione...</option>
-                                        <option <%= province === "BA" && 'selcted' %> value="BA">Buenos Aires</option>
-                                        <option <%= province === "NQM" && 'selcted' %> value="NQN">Neuquen</option>
+                                        <option value="" hidden>Seleccione...</option>
+                                        
                                     </select>
                                 </div>
 
                                     <div class="col-12 col-md-6 mb-3">
                                         <label for="city" class="form-label">Ciudad</label>
                                         <select type="text" class="form-select" id="city" name="city">
-                                            <option <%= city === "" && 'selcted' %> value="" hidden>Seleccione...</option>
-                                            <option <%= city === "HU" && 'selcted' %> value="HU">Hurlingham</option>
-                                            <option <%= city === "MO" && 'selcted' %> value="MO">W. Morris</option>
-                                            <option <%= city === "TS" && 'selcted' %> value="TS">V. Tesey</option>
+                                            <option value="" hidden>Seleccione...</option>
+                                            
                                         </select>
                                     </div>
                                                                                               

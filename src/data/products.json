@@ -86,5 +86,19 @@
       "image": "1697022962281_products_.jpg",
       "images": [],
       "createAt": "2023-10-11T11:16:02.399Z"
+   },
+   {
+      "id": "c171ddcf-e37a-4424-b362-e40a77a60473",
+      "title": "Arroz al Osito",
+      "price": 50000,
+      "discount": 5,
+      "description": "Delisioso Guiso de arroz con forma de Osito",
+      "image": "1698591211741_products_.jpg",
+      "images": [
+         "1698591211746_products_.jpg",
+         "1698591211748_products_.jpg",
+         "1698591211749_products_.jpg"
+      ],
+      "createAt": "2023-10-29T14:53:31.885Z"
    }
 ]

@@ -1,11 +1,26 @@
-const { readJSON, writeJSON } = require("../../data")
+const { existsSync, unlinkSync } = require("fs");
+const db = require("../../database/models");
 
-module.exports = (req,res) => {
-   const products = readJSON('products.json');
+module.exports = (req, res) => {
+  db.Image.findAll({
+    where: {
+      productId: req.params.id,
+    },
+  })
+    .then((images) => {
+      images.forEach((image) => {
+        existsSync(`./public/img/products/${image.file}`) &&
+          unlinkSync(`./public/img/products/${image.file}`);
+      });
 
-   const productsModify = products.filter(product => product.id !== req.params.id)
+      db.Product.destroy({
+        where: {
+          id: req.params.id,
+        },
+      }).then(() => {
+        return res.redirect("/admin");
+      });
+    })
 
-   writeJSON(productsModify, 'products.json')
-
-   return res.redirect('/admin')
-}
+    .catch((error) => console.log(error));
+};

@@ -1,11 +1,22 @@
-const { readJSON } = require("../../data")
+const db = require("../../database/models")
 
 module.exports = (req,res) => {
 
-    const categories = readJSON('categories.json');
-    const sections = readJSON('sections.json')
-    return res.render('productAdd', {
+    const categories = db.Category.findAll({
+        order : ['name']
+    });
+    const sections = db.Section.findAll({
+        order : ['name']
+    });
+
+    Promise.all([categories, sections])
+        .then(([categories, sections]) => {
+
+            return res.render('productAdd', {
         categories,
-        sections : sections.sort()
+        sections
+        })
+    
     })
+    .catch(error => console.log(error))
 }

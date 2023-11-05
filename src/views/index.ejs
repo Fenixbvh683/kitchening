@@ -29,12 +29,12 @@
    
     <div class="home__main__section--products">
 
-<% products.forEach(({title, description, id, section, image}) => { %>
+<% products.forEach(({title, description, id, section, images}) => { %>
 
       <article class="home__main__section__article" data-aos="zomm-in-right" data-aos-duration="500">
           <div class="home__main__section__article--box">
-              <img class="home__main__section__article--image" src="/img/products/<%= image ? image : 'fideo.jpg' %>" alt="producto-1">
-              <img class="home__main__section__article--sticker" src="/img/<%= section === 'free' ? 'img-gratis.png' : section === 'sale' ? 'img-descuento.png' : 'img-nuevo.png' %>" alt="nuevo">
+              <img class="home__main__section__article--image" src="/img/products/<%= images.find(image => image.main).file %>" alt="producto-1">
+              
               <a class="home__main__section__article--zoom" href="">AMPLIAR FOTO</a>
           </div>
           <h4 class="home__main__section__article--title"><%= title %></h4>
